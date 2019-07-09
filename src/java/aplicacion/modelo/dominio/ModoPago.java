@@ -68,6 +68,11 @@ public class ModoPago  implements java.io.Serializable {
         this.facturas = facturas;
     }
 
+    @Override
+    public String toString() {
+         return String.format("ModoPago: [%S,%S]",descripcion, cuotas,interes);
+    }
+ 
 
 
 

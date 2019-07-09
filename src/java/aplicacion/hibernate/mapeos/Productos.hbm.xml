@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 10-jun-2019 2:25:42 by Hibernate Tools 4.3.1 -->
+<!-- Generated 06-jul-2019 5:09:32 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
   <class catalog="proyecto" name="aplicacion.modelo.dominio.Producto" optimistic-lock="version" table="productos">
     <id name="codProducto" type="int">
@@ -19,8 +19,8 @@
     <property name="stock" type="java.lang.Integer">
       <column name="stock"/>
     </property>
-    <property name="foto" type="byte[]">
-        <column name="foto"/>
+    <property name="foto" type="binary">
+      <column name="foto"/>
     </property>
     <set fetch="select" inverse="true" lazy="true" name="detalles" table="detalle">
       <key>

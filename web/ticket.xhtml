@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template1.xhtml">
+
+            <ui:define name="top">
+                <h:head>
+                    <title>Holaaaaaaaaaaaaaaaaaaaaa</title>
+                    <style>
+                    @media print{
+                        .btn21, .btn11{
+                         display: none;
+                        } 
+                    }
+                     </style>
+                </h:head>
+                <h:body>
+        <h:form>
+            <p:panelGrid class="pnl1" columns="2" >
+                <p:outputLabel value="Fecha de compra:"/>
+                <p:outputLabel value="9/07/19" />
+                <p:outputLabel value="Usuario"/>
+                <p:outputLabel value="Una persona"/>
+                <p:outputLabel value="DNI:"/>
+                <p:outputLabel value="42804494"/>
+                <p:outputLabel value="Modo de pago"/>
+                <p:outputLabel value="paypal"/>
+                <p:outputLabel value="Cantidad de cuotas:"/>
+                <p:outputLabel value="6"/>
+                <p:outputLabel value="Total de compra:"/>
+                <p:outputLabel value="Supuestamente aqui va un valor"/>
+            </p:panelGrid>
+            
+        </h:form>
+    </h:body>
+                
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGrid  >
+                    <p:dataTable emptyMessage="No se ingreso ningun producto" var="3" value="ingrese la lista de los productos" >
+                    <p:column headerText="Producto" >
+                        <p:outputLabel value="1 juguete"/>
+                    </p:column> 
+                    <p:column headerText="Cantidad">
+                    </p:column>
+                    <p:column headerText="Total del producto">
+                      </p:column>      
+                </p:dataTable>
+            </h:panelGrid>
+            <p:commandButton class="btn11"  value="Imprimir factura" onclick="print()" icon="ui-icon-print" />
+            <p:linkButton class="btn21"  value="Volver" outcome="vistadecompra.xhtml" icon="ui-icon-close" />
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

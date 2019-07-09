@@ -18,7 +18,7 @@ public class Detalle  implements java.io.Serializable {
      private Producto productos;
      private Integer cantidad;
      private String precioProdCant;
-
+     private boolean estado;
     public Detalle() {
     }
 
@@ -28,12 +28,13 @@ public class Detalle  implements java.io.Serializable {
         this.factura = factura;
         this.productos = productos;
     }
-    public Detalle(int iddetalle, Factura factura, Producto productos, Integer cantidad, String precioProdCant) {
+    public Detalle(int iddetalle, Factura factura, Producto productos, Integer cantidad, String precioProdCant,boolean estado) {
        this.iddetalle = iddetalle;
        this.factura = factura;
        this.productos = productos;
        this.cantidad = cantidad;
        this.precioProdCant = precioProdCant;
+       this.estado= estado;
     }
    
     public int getIddetalle() {
@@ -72,8 +73,13 @@ public class Detalle  implements java.io.Serializable {
         this.precioProdCant = precioProdCant;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
 
-
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 
 }
 
