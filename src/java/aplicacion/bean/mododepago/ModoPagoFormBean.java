@@ -7,6 +7,7 @@ package aplicacion.bean.mododepago;
 
 import aplicacion.bean.mododepago.ModoPagoBean;
 import aplicacion.modelo.dominio.ModoPago;
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -19,7 +20,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @RequestScoped
-public class ModoPagoFormBean {
+public class ModoPagoFormBean implements Serializable{
     @ManagedProperty(value = "#{modopago}")
     private ModoPagoBean modopago;
     private ModoPago unModoPago;

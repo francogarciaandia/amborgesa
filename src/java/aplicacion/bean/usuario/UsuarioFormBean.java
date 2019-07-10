@@ -7,6 +7,7 @@ package aplicacion.bean.usuario;
 
 import aplicacion.modelo.dominio.Cliente;
 import aplicacion.modelo.dominio.Usuario;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,7 +24,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @RequestScoped
-public class UsuarioFormBean {
+public class UsuarioFormBean implements Serializable{
     @ManagedProperty(value = "#{usuarioBean}")
     private UsuarioBean usuarioBean; 
     private Cliente unCliente;

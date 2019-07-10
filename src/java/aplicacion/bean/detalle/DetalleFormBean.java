@@ -1,20 +1,26 @@
+package aplicacion.bean.detalle;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import aplicacion.bean.detalle.DetalleBean;
 import aplicacion.modelo.dominio.Detalle;
 import aplicacion.modelo.dominio.Factura;
 import aplicacion.modelo.dominio.ModoPago;
 import aplicacion.modelo.dominio.Producto;
+import aplicacion.modelo.dominio.Usuario;
+import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -22,17 +28,17 @@ import javax.faces.context.FacesContext;
  * @author TOSHIBA
  */
 @ManagedBean
-@RequestScoped
-public class DetalleFormBean {
+@SessionScoped
+public class DetalleFormBean implements Serializable{
     @ManagedProperty(value = "#{detalleBean}")
     private DetalleBean detalleBean;
     private Factura unaFactura;
     private Producto unProducto;
     private Detalle unDetalle;
     private ModoPago modoPago;
-    private List<Detalle> listadoDetalleCompra;
     private List<Detalle> listadodetallealternativo;
-
+    private int num;
+    private ArrayList<String> decripciones;
     /**
      * Creates a new instance of DetalleFormBean
      */
@@ -42,20 +48,22 @@ public class DetalleFormBean {
         unProducto=new Producto();
         unDetalle=new Detalle();
         modoPago=new ModoPago();
-        listadoDetalleCompra=new ArrayList();
         listadodetallealternativo=new ArrayList();
+     
+    }
+    @PostConstruct
+    public void init()
+    {decripciones=new ArrayList();
+        decripciones.add("efectivo");
+        decripciones.add("tarjeta de credito");
+        decripciones.add("Tarjeta de debito");
     }
    
-    public void agregarDetalle(){
-        getUnDetalle().setFactura(unaFactura);
-        getUnDetalle().setProductos(unProducto);
-        Random r= new Random(System.currentTimeMillis());
-         int codigo = (int) r.nextInt(200);
-        getUnDetalle().setIddetalle((int) codigo);
+    public void agregarDetalle(Detalle d){
+      
+       
          try {
-            getDetalleBean().agregarDetalle(getUnDetalle());
-             FacesMessage facesMesagge=new FacesMessage(FacesMessage.SEVERITY_INFO,"Detalle agregado correctamente","muy bien");
-               FacesContext.getCurrentInstance().addMessage(null, facesMesagge);
+            getDetalleBean().agregarDetalle(d);
            }
            catch(Exception e){
                FacesMessage facesMessage=new FacesMessage(FacesMessage.SEVERITY_WARN,"hubo un inconveniente al intentar agregar","no se pudo agregar Detalle");
@@ -76,8 +84,55 @@ public class DetalleFormBean {
     {
         Detalle ggDetalle=new Detalle();
         ggDetalle.setProductos(r);
+        ggDetalle.setCantidad(0);
+        ggDetalle.setIddetalle((int) (Math.random()*1000000));
         getListadodetallealternativo().add(ggDetalle);
+        System.out.println(ggDetalle.getIddetalle());
+    }
+    public void volverListado()
+    {
+       for (int i=0;i< listadodetallealternativo.size();i++)
+        {
+            if(listadodetallealternativo.get(i).isEstado()==false)
+            {
+                listadodetallealternativo.remove(i);
+            }
+            
+        }
+       
+    }
+    public String  generarFactura()
+    { String y=null;
+       Date fDate = null;
+      modoPago.setInteres((double)(modoPago.getCuotas())+3.0);
+      // unaFactura.setFecha(Date.from(Instant.now()));
+        unaFactura.setUsuarios((Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuariovalidado"));
+         modoPago.setIdmodoPago((int) (Math.random()*1000000));
+            unaFactura.setModopago(modoPago);
+            unaFactura.setNumFactura((int) (Math.random()*1000000));
         
+         for (int i=0;i< listadodetallealternativo.size();i++)
+        {
+           
+          listadodetallealternativo.get(i).setFactura(unaFactura);
+        
+        }
+            for (int i=0;i< listadodetallealternativo.size();i++)
+        {
+           
+         agregarDetalle(listadodetallealternativo.get(i));
+        
+        }
+            return y="ticket?faces-redirect=true";
+    }
+    public String sumarPrecios(Detalle e)
+    {double t=0;String a;
+        for(int i=0;i<listadodetallealternativo.size();i++)
+        {
+            t=t+(listadodetallealternativo.get(i).getProductos().getPrecio()*e.getCantidad());
+        }
+         a=Double.toString(t);
+        return a ;
     }
     public void eliminarDetalle(){
          try {
@@ -125,6 +180,7 @@ public class DetalleFormBean {
 //  }  
 //  listarArrayUsuarioPdf();
 //}
+    
     /**
      * @return the detalleBean
      */
@@ -159,7 +215,18 @@ public class DetalleFormBean {
     public Producto getUnProducto() {
         return unProducto;
     }
-
+ public double  calculo (Detalle unaDetalle)
+ {
+     if(unaDetalle.getCantidad()==null)
+     {
+         unaDetalle.setCantidad(1);
+     }
+     
+     double y=((double) unaDetalle.getCantidad())* unaDetalle.getProductos().getPrecio();
+   String  i= Double.toString(y);
+   unaDetalle.setPrecioProdCant(i);
+    return y;
+ }
     /**
      * @param unProducto the unProducto to set
      */
@@ -195,19 +262,7 @@ public class DetalleFormBean {
         this.modoPago = modoPago;
     }
 
-    /**
-     * @return the listadoDetalleCompra
-     */
-    public List<Detalle> getListadoDetalleCompra() {
-        return listadoDetalleCompra;
-    }
-
-    /**
-     * @param listadoDetalleCompra the listadoDetalleCompra to set
-     */
-    public void setListadoDetalleCompra(List<Detalle> listadoDetalleCompra) {
-        this.listadoDetalleCompra = listadoDetalleCompra;
-    }
+    
 
     public List<Detalle> getListadodetallealternativo() {
         return listadodetallealternativo;
@@ -216,5 +271,18 @@ public class DetalleFormBean {
     public void setListadodetallealternativo(List<Detalle> listadodetallealternativo) {
         this.listadodetallealternativo = listadodetallealternativo;
     }
+
+    public int getNum() {
+        return num;
+    }
+
+    public ArrayList<String> getDecripciones() {
+        return decripciones;
+    }
+
+    public void setDecripciones(ArrayList<String> decripciones) {
+        this.decripciones = decripciones;
+    }
+
     
 }

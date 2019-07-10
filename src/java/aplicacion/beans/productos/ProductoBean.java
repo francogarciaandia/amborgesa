@@ -12,14 +12,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import aplicacion.dao.interfaz.ProductoDAO;
 import aplicacion.modelo.dominio.Categoria;
-
 /**
  *
  * @author TOSHIBA
  */
 @ManagedBean
 @SessionScoped
-public class ProductoBean{
+public class ProductoBean {
     private ProductoDAO productoDao;
     
     /**

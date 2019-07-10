@@ -18,7 +18,7 @@ import aplicacion.dao.interfaz.CategoriaDAO;
  */
 @ManagedBean
 @SessionScoped
-public class CategoriaBean {
+public class CategoriaBean  {
     private CategoriaDAO categoriaDAO;
     
 

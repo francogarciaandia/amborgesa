@@ -6,12 +6,12 @@
 package aplicacion.bean.usuario;
 
 import aplicacion.dao.imp.UsuarioDAOImp;
-import aplicacion.modelo.dominio.Cliente;
 import aplicacion.modelo.dominio.Usuario;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import aplicacion.dao.interfaz.UsuarioDAO;
+
 
 /**
  *

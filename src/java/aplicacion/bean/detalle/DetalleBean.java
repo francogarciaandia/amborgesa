@@ -8,15 +8,15 @@ package aplicacion.bean.detalle;
 import aplicacion.dao.imp.DetalleDAOImp;
 import aplicacion.modelo.dominio.Detalle;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import aplicacion.dao.interfaz.DetalleDAO;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author TOSHIBA
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class DetalleBean {
     private DetalleDAO detalleDao;
     private Detalle unDetalle;

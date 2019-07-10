@@ -8,6 +8,7 @@ package aplicacion.bean.categoria;
 
 import aplicacion.bean.categoria.CategoriaBean;
 import aplicacion.modelo.dominio.Categoria;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.PostConstruct;
@@ -24,7 +25,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @SessionScoped
-public class CategoriaFormBean {
+public class CategoriaFormBean implements Serializable{
     @ManagedProperty (value = "#{categoriaBean}")
     private CategoriaBean categoriaBean;
     private Categoria unaCategoria;

@@ -37,7 +37,7 @@ public class ProductoFormBean implements Serializable{
     private Producto unProducto;
     private List<Producto> productos;
     private List<Categoria> categorias;
-    private transient UploadedFile archivo=null;
+    private transient UploadedFile archivo1=null;
     private Producto productoSeleccionado;
     private Producto otroProducto;
 
@@ -60,8 +60,8 @@ public class ProductoFormBean implements Serializable{
     
     public void agregarProducto(){
         getUnProducto().setCodProducto((int) (Math.random()*1000000));
-        if(getArchivo() != null){
-            byte[] contents = getArchivo().getContents();
+        if(getArchivo1() != null){
+            byte[] contents = getArchivo1().getContents();
             getUnProducto().setFoto(contents);
         }
         else{
@@ -170,19 +170,6 @@ public class ProductoFormBean implements Serializable{
         this.unProducto = unProducto;
     }
 
-    /**
-     * @return the archivo
-     */
-    public UploadedFile getArchivo() {
-        return archivo;
-    }
-
-    /**
-     * @param archivo the archivo to set
-     */
-    public void setArchivo(UploadedFile archivo) {
-        this.archivo = archivo;
-    }
 
     /**
      * @return the productos
@@ -232,5 +219,13 @@ public class ProductoFormBean implements Serializable{
     public void setOtroProducto(Producto otroProducto) {
         this.otroProducto = otroProducto;
     }
-    
+
+    public UploadedFile getArchivo1() {
+        return archivo1;
+    }
+
+    public void setArchivo1(UploadedFile archivo1) {
+        this.archivo1 = archivo1;
+    }
+  
 }

@@ -26,14 +26,16 @@
                             <p:outputLabel value="#{comp.productos.precio}"/>
                         </p:column>
                         <p:column headerText="Cantidad">
-                            <p:spinner min="0" max="#{comp.productos.stock}" />
+                            <p:spinner min="0" max="#{comp.productos.stock}" value="#{comp.cantidad}" >
+                                <p:ajax update="outy" process="@this"/>
+                            </p:spinner>
                         </p:column>
-                        <p:column headerText="Total Producto">
-                            
+                        <p:column headerText="Total Producto" >
+                            <p:outputLabel id="outy" value="#{detalleFormBean.calculo(comp)}"/>
                         </p:column>
 
                         <p:column headerText="Comprar">
-                            <p:selectBooleanCheckbox id="Seleccionar" />
+                            <p:selectBooleanCheckbox id="Seleccionar" value="#{comp.estado}"/>
                         </p:column>
                     </p:dataTable>
                 </p:panelGrid>
@@ -47,32 +49,32 @@
                   resizable="false" modal="true" height="200" >
                 <h:form id="frmAltaUs">
                     <p:panelGrid  columns="3">
-                        <p:dataTable value="Confirmacion de compra" var="v" >
-                            <p:column headerText="producto"  >
-                                <p:outputLabel value="1 juguete"/>
+                        <p:dataTable  id="dth" value="#{detalleFormBean.listadodetallealternativo}" var="v" >
+                            <p:column headerText="producto">
+                                <p:outputLabel  id="rt" value="#{v.productos.categorias.nombre}" />
                             </p:column>
                        
                             <p:column headerText="Cantidad">
-                                
+                                <p:outputLabel id="op" value="#{v.cantidad}" />
                             </p:column>
                         
-                            <p:column headerText="Total del producto">
-                                
+                            <p:column headerText="Costo Total">
+                                <p:outputLabel id="kk" value="#{v.precioProdCant}" />
                             </p:column>
                              
                         </p:dataTable>     
                     </p:panelGrid>
                     <p:panelGrid columns="2">
                                 <p:outputLabel value="Forma  de  pago   "/>                               
-                                <p:selectOneMenu value="Hola" >
-                                    <f:selectItem itemLabel="Seleccione metodo" itemValue="#{null}" noSelectionOption="True"/>
-                                    <f:selectItem itemLabel="Tarjeta" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItem itemLabel="Efectivo"  />
-                                    <f:selectItems value="holaa"/>
+                                <p:selectOneMenu value="#{detalleFormBean.modoPago.descripcion}" >
+                                    <f:selectItem itemLabel="Seleccione metodo" itemValue="#{null}" noSelectionOption="True"/> 
+                                   <f:selectItems value="#{detalleFormBean.decripciones}"
+                                                  var="yoo"  itemLabel="#{yoo}" itemValue="#{yoo}"/>
+                                                  
                                 </p:selectOneMenu>
-                                <p:outputLabel value="Cantidad de cuotas     "/>
-                                <p:spinner value="0" min="0" max="12"/>
-                            <p:linkButton outcome="ticket.xhtml" value="Confirmar"/>
+                                <p:outputLabel value="Cantidad de cuotas"/>
+                                <p:spinner value="#{detalleFormBean.modoPago.cuotas}" min="0" max="12" />
+                                <p:commandButton  value="Confirmar" actionListener="#{detalleFormBean.generarFactura()}"/>
                             <p:linkButton outcome="vistadecompra.xhtml" value="volver"/>
                     </p:panelGrid>
                 </h:form>
@@ -82,8 +84,8 @@
 
             <ui:define name="content">
                 <p:outputLabel value="Si ya selecciono los productos que va a comprar, haga click en este enlace:"/>
-                        <p:commandLink id="link" value="Pagar productos" 
-                               update=":altaus"
+                <p:commandLink id="link" value="Pagar productos"  actionListener="#{detalleFormBean.volverListado()}"
+                               update=":altaus" 
                                oncomplete="PF('Agregar').show()"/> 
             </ui:define>
 

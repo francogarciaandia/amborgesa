@@ -7,6 +7,7 @@ package aplicacion.bean.factura;
 import aplicacion.modelo.dominio.Factura;
 import aplicacion.modelo.dominio.ModoPago;
 import aplicacion.modelo.dominio.Usuario;
+import java.io.Serializable;
 import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +21,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @RequestScoped
-public class FacturaFormBean {
+public class FacturaFormBean implements Serializable{
     @ManagedProperty( value = "#{facturaBean}")
     private FacturaBean facturaBean;
     private Factura unaFactura;
@@ -37,6 +38,7 @@ public class FacturaFormBean {
         unModoPago=new ModoPago();
     }
     public void CrearFactura(){
+        
         unaFactura.setUsuarios(unUsuario);
         unaFactura.setModopago(unModoPago);
         Random r= new Random(System.currentTimeMillis());
@@ -85,7 +87,7 @@ public class FacturaFormBean {
                        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
            }
     }
-
+    
     /**
      * @return the facturaBean
      */
