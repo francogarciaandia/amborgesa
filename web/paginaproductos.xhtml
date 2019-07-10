@@ -91,7 +91,7 @@
                                            var="cat" 
                                            itemLabel="#{cat.nombre}" itemValue="#{cat}"/>
                         </p:selectOneMenu>
-                        <p:fileUpload id="foto" mode="simple" value="#{productoFormBean.archivo}"  />
+                        <p:fileUpload id="foto" mode="simple" value="#{productoFormBean.archivo1}"  />
                         
                         
                         <p:commandButton id="je" value="AgregarProd" update=":frm7:mensaje :frm7:data1" actionListener="#{productoFormBean.agregarProducto()}" oncomplete="PF('AgregarProd').hide()"/>
